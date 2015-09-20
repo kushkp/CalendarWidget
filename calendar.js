@@ -1,8 +1,10 @@
 (function () {
-  if (typeof SG === "undefined") {
-    window.SG = {};
+  if (typeof CW === "undefined") {
+    window.CW = {};
   }
 
-  
+  Calendar.widget = function() {
+
+  };
 
 })();
