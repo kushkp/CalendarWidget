@@ -1,22 +1,39 @@
-$(function () {
+$(document).ready(function () {
   if (typeof CW === "undefined") {
     window.CW = {};
   }
 
-  function AJAX_JSON_Req()  {
-    var AJAX_req = new XMLHttpRequest();
-    AJAX_req.open("GET", url, true);
-    AJAX_req.setRequestHeader("content-type", "application/json");
-  }
+  var loadFile = CW.loadFile = function() {
+   var input, file, fr;
 
-  function createModels() {
+   if (typeof window.FileReader !== 'function') {
+     alert("The file API isn't supported on this browser yet.");
+     return;
+   }
 
-  }
+   input = document.getElementById('fileinput');
+   if (!input) {
+     alert("Um, couldn't find the fileinput element.");
+   }
+   else if (!input.files) {
+     alert("This browser doesn't seem to support the `files` property of file inputs.");
+   }
+   else if (!input.files[0]) {
+     alert("Please select a file before clicking 'Load'");
+   }
+   else {
+     file = input.files[0];
+     fr = new FileReader();
+     fr.onload = receivedText;
+     fr.readAsText(file);
+   }
 
-  var Calendar = CW.Calendar = function() {
+   function receivedText(e) {
+     lines = e.target.result;
+     var json = JSON.parse(lines);
+     console.log(json.events);
+   }
+ };
 
-  };
 
-
-
-})();
+});
